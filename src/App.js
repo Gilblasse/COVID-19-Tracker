@@ -4,6 +4,9 @@ import { FormControl, Select, MenuItem, Card, CardContent } from "@material-ui/c
 import InfoBox from "./components/InfoBox";
 import Table from "./components/Table/Table";
 import Map from "./components/Map";
+import { sortData } from './util';
+
+
 
 function App() {
   const baseURL = 'https://disease.sh/v3/covid-19'
@@ -31,7 +34,8 @@ function App() {
         }
       )
     })
-    setTableData(countiresData)
+
+    setTableData(sortData(countiresData))
     setCountries(countries)
   }
 
