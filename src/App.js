@@ -5,11 +5,12 @@ import InfoBox from "./components/InfoBox";
 import Table from "./components/Table/Table";
 import Map from "./components/Map";
 import { sortData } from './util';
-
+import LineGraph from "./components/LineGraph/LineGraph";
+import {countryURL,worldWideURL,countriesURL} from './constants/APIS'
 
 
 function App() {
-  const baseURL = 'https://disease.sh/v3/covid-19'
+  // const baseURL = 'https://disease.sh/v3/covid-19'
   const [ countries, setCountries ] = useState([]);
   const [ country, setCountry ] = useState("worldWide");
   const [ countryInfo, setCountryInfo ] = useState({})
@@ -23,7 +24,7 @@ function App() {
 
 
   const getCountriesData = async ()=> {
-    const data = await fetch(`${baseURL}/countries`)
+    const data = await fetch(countriesURL)
     const countiresData = await data.json()
     const countries = countiresData.map(country => {
       return (
@@ -40,15 +41,15 @@ function App() {
   }
 
   const worldwideData = async ()=> {
-    const res = await fetch(`${baseURL}/all`)
+    const res = await fetch(worldWideURL)
     const data = await res.json()
     setCountryInfo(data)
   }
 
   const handleCountrySelection = async (e)=> {
     const selectedCountry = e.target.value
-    const urlExtention = selectedCountry === 'worldwide' ? 'all' : `countries/${selectedCountry}`
-    const data = await fetch(`${baseURL}/${urlExtention}`)
+    const url = selectedCountry === 'worldwide' ? worldWideURL : countryURL(selectedCountry)
+    const data = await fetch(url)
     const countryData = await data.json()
 
 
@@ -57,6 +58,7 @@ function App() {
   }
 
 
+  
   return (
     <div className="app">
       
@@ -93,6 +95,7 @@ function App() {
           <h3>Live Cases By Country</h3>
           <Table countries={tableData}/>
           <h3>Worldwide new cases</h3>
+          <LineGraph/>
         </CardContent>
       </Card>
 
