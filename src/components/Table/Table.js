@@ -4,14 +4,6 @@ import './Table.css'
 
 function Table({countries}) {
 
-    // const sortCountriesByCases = ()=>{
-    //     return countries.sort((countryA,countryB) => {
-    //         return countryA.cases - countryB.cases
-    //     }).reverse()
-    // }
-
-
-
 
     return (
         <div className="table">
